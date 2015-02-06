@@ -21,7 +21,10 @@
     "gis"
   ],
   "dependencies": {
-    "geojson": "^0.2.0"
+    "geojson": "^0.2.0",
+    "geojson-utils": "^1.1.0",
+    "jsts": "^0.15.0",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "grunt-cli": "^0.1.13",
