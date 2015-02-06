@@ -1,0 +1,41 @@
+{
+  "name": "deviationdetective",
+  "version": "0.0.0",
+  "description": "Have two geojson lines? Yes? Good! Use this tool to find differences between the two.",
+  "author": {
+    "name": "Julien Clifford",
+    "email": "jcliff90@gmail.com"
+  },
+  "repository": "user/repo",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "deviationdetective",
+    "geojson",
+    "line",
+    "deviation",
+    "difference",
+    "split",
+    "gis"
+  ],
+  "dependencies": {
+    "geojson": "^0.2.0"
+  },
+  "devDependencies": {
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "load-grunt-tasks": "^1.0.0",
+    "time-grunt": "^1.0.0",
+    "grunt-mocha-cli": "^1.11.0",
+    "jshint-stylish": "^1.0.0",
+    "browserify": "^7.0.0"
+  },
+  "scripts": {
+    "test": "grunt",
+    "browser": "browserify index.js > browser.js"
+  }
+}
