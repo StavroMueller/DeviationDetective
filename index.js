@@ -1,6 +1,9 @@
 'use strict';
 module.exports = {
-  compareLines: function(primaryLine, deviationLine, threshold) {
+  //In this function - a "deviation" will be when the second selected line (here the "Deviation line")
+  //separates from the primary line by the amount defined in the threshold. A primary line can have
+  //many deviations.
+  compareLines: function(primaryLine, deviationLine, threshold, featureCollection) {
 
     var deviationFeatures = [];
     //Should we have a check to see if any points are in common at all before all the calcs are done?
@@ -10,7 +13,7 @@ module.exports = {
     var _ = require('underscore');
 
     //First, we'll create a buffer around the primary line.
-    //For this, we'll need JSTC.
+    //For this, we'll need JSTS.
     var jsts = require('jsts');
 
     //We have to parse the GeoJSON into a JSTC format to do the operation.
@@ -37,7 +40,7 @@ module.exports = {
     var deviationCoordinates = [];
     //Now we can find all of the points from the deviation line that are not in the buffer.
     console.log('first coordinate', deviationLine.geometry.coordinates[0]);
-    _.each(deviationLine.geometry.coordinates, function(coordinate) {
+    _.each(deviationLine.geometry.coordinates, function(coordinate, index) {
       var pointOutsideBuffer = gju.pointInPolygon({ 'type': 'Point', 'coordinates': coordinate}, primaryLineBuffer) ? false : true;
       console.log(pointOutsideBuffer, 'is it?');
       if (pointOutsideBuffer && workingOutsideBuffer) {
@@ -48,8 +51,17 @@ module.exports = {
       else if (pointOutsideBuffer) {
         //This is a new line that is outside the buffer. This is the first point in that line.
         console.log('first point');
+        var previousPoint = deviationLine.geometry.coordinates[index - 1] ? deviationLine.geometry.coordinates[index - 1] : false;
         workingOutsideBuffer = true;
-        deviationCoordinates = [coordinate];
+        if (previousPoint) {
+          //We need to get the point before, that is inside the buffer but begins the 
+          //"deviation"
+          deviationCoordinates = [previousPoint, coordinate];
+        }
+        else {
+          //Or, if the previous one is null, it just begins here.
+          deviationCoordinates = [coordinate];
+        }
       }
       else if (workingOutsideBuffer) {
         //This means that we are in the buffer, therefore this is the last point in a deviation.
@@ -76,26 +88,16 @@ module.exports = {
 
     });
 
-    //After this, we should make sure we are no longer workingOutsideBuffer - if so, complete the line.
-
-    /*
-    //Threshold is in DD - how far apart we want the section to be to determine a new segment.
-    //We use this index to step along in the second line, incremented every time we move
-    //along the primary line.
-    var deviationLineCoordinate = 0;
-    var primaryLinePreviousPoint = 0;
-    var deviationLinePreviousPoint = 0
-    _.each(primaryLine.geometry.coordinates, function(linePoint) {
-      //check if the deviation line point is within a buffer of the primary line
-      //If it isn't, traverse the deviation line until they are equal again. (loop)
-
-
-    })
-    */
-
-    //An array of geojson line objects
-    return deviationFeatures;
-
+    console.log('fc', featureCollection);
+    if (featureCollection) {
+      return {
+        "type": "FeatureCollection",
+        "features": deviationFeatures
+      };
+    }
+    else {
+      return deviationFeatures;
+    }
   }
 
 }

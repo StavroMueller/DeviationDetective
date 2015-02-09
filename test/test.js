@@ -21,7 +21,7 @@ describe('deviationdetective node module', function () {
         var threshold = .025;
 
 
-        var deviations = deviationdetective.compareLines(firstLine, secondLine, threshold);
+        var deviations = deviationdetective.compareLines(firstLine, secondLine, threshold, true);
 
         expect(deviations).to.have.a.property("type", "FeatureCollection");
 
