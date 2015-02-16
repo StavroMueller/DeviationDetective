@@ -6,7 +6,7 @@
     "name": "Julien Clifford",
     "email": "jcliff90@gmail.com"
   },
-  "repository": "user/repo",
+  "repository": "StavroMueller/DeviationDetective",
   "license": "MIT",
   "files": [
     "index.js"
