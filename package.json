@@ -1,5 +1,5 @@
 {
-  "name": "deviationdetective",
+  "name": "deviationDetective",
   "version": "0.1.0",
   "description": "Have two geojson lines? Yes? Good! Use this tool to find differences between the two.",
   "author": {
