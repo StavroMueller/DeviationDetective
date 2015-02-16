@@ -8,7 +8,6 @@ module.exports = {
     var deviationFeatures = [];
     //Should we have a check to see if any points are in common at all before all the calcs are done?
     //One feature collection with two line features inside
-    var GeoJSON = require('geojson');
     var gju = require('geojson-utils')
     var _ = require('underscore');
 
